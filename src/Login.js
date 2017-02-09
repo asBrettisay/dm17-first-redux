@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import store from './redux/store';
 
 class Login extends Component {
   constructor(props) {
@@ -8,7 +9,8 @@ class Login extends Component {
       newUser: ''
     }
 
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.loginUser = this.loginUser.bind(this);
   }
 
   handleChange(event) {
@@ -17,11 +19,18 @@ class Login extends Component {
     })
   }
 
+  loginUser() {
+    store.dispatch({
+      type: 'users/LOGIN_USER',
+      payload: this.state.newUser
+    })
+  }
+
   render() {
     return (
       <div>
         <input value={this.state.newUser} onChange={this.handleChange}/>
-        <button onClick={this.props.loginAction.bind(null, this.state.newUser)}>Login</button>
+        <button onClick={this.loginUser}>Login</button>
       </div>
     )
   }
